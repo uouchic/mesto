@@ -1,5 +1,5 @@
 .profile__info {
-  flex-grow: 1;
+  max-width: 580px;
   display: flex;
   margin-left: 30px;
   flex-wrap: wrap;
