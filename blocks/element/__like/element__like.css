@@ -1,0 +1,15 @@
+.element__like {
+  display: block;
+  border: 0;
+  width: 22px;
+  height: 19px;
+  align-self: flex-end;
+  cursor: pointer;
+  background-image: url(../../../images/vector.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.element__like:hover {
+  opacity: 0.5;
+}

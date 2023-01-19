@@ -1,0 +1,23 @@
+.profile__addbutton {
+  width: 150px;
+  height: 50px;
+  box-sizing: border-box;
+  border: 2px solid #ffffff;
+  border-radius: 2px;
+  background-color: inherit;
+  background-image: url(../../../images/plus.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  cursor: pointer;
+}
+
+.profile__addbutton:hover {
+  opacity: 0.6;
+}
+
+@media screen and (max-width: 1023px) {
+  .profile__addbutton {
+    width: 100%;
+    margin-top: 36px;
+  }
+}

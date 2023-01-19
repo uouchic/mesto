@@ -1,0 +1,25 @@
+.profile__aditbutton {
+  width: 24px;
+  height: 24px;
+  box-sizing: border-box;
+  border: 1px solid #ffffff;
+  background-color: inherit;
+  margin-left: 18px;
+  align-self: center;
+  background-image: url(../../../images/pensil.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  cursor: pointer;
+}
+
+.profile__aditbutton:hover {
+  opacity: 0.6;
+}
+
+@media screen and (max-width: 1023px) {
+  .profile__aditbutton {
+    width: 18px;
+    height: 18px;
+    margin-left: 10px;
+  }
+}
