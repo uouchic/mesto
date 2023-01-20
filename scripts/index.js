@@ -1,9 +1,9 @@
-let popupBtnOpen = document.querySelector(".profile__aditbutton");
+let popupBtnOpen = document.querySelector(".profile__adit-button");
 let popupContainer = document.querySelector(".popup");
 let popupBtnClose = document.querySelector(".popup__close");
-let formElement = document.querySelector(".popup__profile");
-let nameInput = document.querySelector(".popup__name");
-let jobInput = document.querySelector(".popup__job");
+let formElement = document.querySelector(".popup__form");
+let nameInput = document.querySelector(".popup__item_insert_name");
+let jobInput = document.querySelector(".popup__item_insert_job");
 let profileInput = document.querySelector(".profile__title");
 let profileJob = document.querySelector(".profile__subtitle");
 
@@ -22,7 +22,7 @@ function closePopup() {
 }
 
 function handleFormSubmit(evt) {
-  evt.preventDefault(); 
+  evt.preventDefault();
   profileInput.textContent = nameInput.value;
   profileJob.textContent = jobInput.value;
   closePopup();
