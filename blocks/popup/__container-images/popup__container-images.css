@@ -8,5 +8,6 @@
   .popup__container-images {
     max-width: 240px;
     height: 299px;
+    margin: 136px auto 0;
   }
 }

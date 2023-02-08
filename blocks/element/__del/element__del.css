@@ -12,3 +12,8 @@
   background-color: inherit;
   cursor: pointer;
 }
+
+
+.element__del:hover {
+  opacity: 0.6;
+}
