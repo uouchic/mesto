@@ -40,19 +40,34 @@
         <h3 class="popup__title popup__title_edit-profile">
           Редактировать профиль
         </h3>
-        <form class="popup__form popup__form_edit-profile" name="edit-profile">
+        <form
+          class="popup__form popup__form_edit-profile"
+          name="edit-profile"
+          novalidate
+        >
           <input
+            id="namе-input"
             class="popup__item popup__item_edit-profile_name"
             type="text"
             name="name"
             value=""
+            minlength="2"
+            maxlength="40"
+            required
           />
+          <span class="namе-input-error popup__error"></span>
+
           <input
+            id="job-input"
             class="popup__item popup__item_edit-profile_job"
             type="text"
             name="job"
             value=""
+            minlength="2"
+            maxlength="200"
+            required
           />
+          <span class="job-input-error popup__error"></span>
           <button class="popup__save popup__save_edit-profile" type="submit">
             Сохранить
           </button>
@@ -67,21 +82,33 @@
     <div class="popup popup_edit-card">
       <div class="popup__container popup__container_edit-card">
         <h3 class="popup__title popup__title_edit-card">Новое место</h3>
-        <form class="popup__form popup__form_edit-card" name="edit-card">
+        <form
+          class="popup__form popup__form_edit-card"
+          name="edit-card"
+          novalidate
+        >
           <input
+            id="place-input"
             class="popup__item popup__item_edit-card_name"
             type="text"
             name="place"
             value=""
             placeholder="Название"
+            minlength="2"
+            maxlength="200"
+            required
           />
+          <span class="place-input-error popup__error"></span>
           <input
+            id="url-input"
             class="popup__item popup__item_edit-card_job"
-            type="text"
+            type="url"
             name="link"
             value=""
             placeholder="Ссылка на картинку"
+            required
           />
+          <span class="url-input-error popup__error"></span>
           <button class="popup__save popup__save_edit-card" type="submit">
             Сохранить
           </button>
@@ -115,6 +142,7 @@
       </article>
     </template>
 
-    <script src="./scripts/index.js"></script>
+    <script defer src="./scripts/index.js"></script>
+    <script defer src="./scripts/validate.js"></script>
   </body>
 </html>

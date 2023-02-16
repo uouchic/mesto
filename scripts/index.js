@@ -5,6 +5,8 @@ const buttonOpenEditProfilePopup = document.querySelector(
 const profileInput = document.querySelector(".profile__title");
 const profileJob = document.querySelector(".profile__subtitle");
 
+const popupContainer = document.querySelectorAll(".popup");
+
 const popupProfile = document.querySelector(".popup_edit-profile");
 const buttonCloseEditProfilePopup = document.querySelector(
   ".popup__close_edit-profile"
@@ -168,4 +170,22 @@ formElementCard.addEventListener("submit", handleProfileFormSubmitCard);
 // слушатель закрытие попапа с картинкой
 popupImgClose.addEventListener("click", () => {
   closePopup(popupImg);
+});
+
+// слушатель закрытия попапа по темной области
+// каждому попапу навешиваем слушатль
+popupContainer.forEach((item) => {
+  item.addEventListener("click", (event) => {
+    if (event.target == event.currentTarget) {
+      closePopup(item);
+    }
+  });
+});
+
+// слушатель закрытия попапа по нажатию кнопки ESC
+document.addEventListener("keydown", (event) => {
+  const closePopupEsc = document.querySelector(".popup_opened");
+  if (event.key == "Escape") {
+    closePopup(closePopupEsc);
+  }
 });
