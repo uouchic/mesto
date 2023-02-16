@@ -9,7 +9,7 @@ const setting = {
 
 // Функция, которая добавляет класс с ошибкой
 const showInputError = (formElement, inputElement, errorMessage) => {
-  const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
+  const errorElement = formElement.querySelector(`.${inputElement.id}`);
   inputElement.classList.add(setting.inputErrorClass);
   errorElement.classList.add(setting.errorClass);
   errorElement.textContent = errorMessage;
@@ -17,7 +17,7 @@ const showInputError = (formElement, inputElement, errorMessage) => {
 
 // Функция, которая удаляет класс с ошибкой
 const hideInputError = (formElement, inputElement) => {
-  const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
+  const errorElement = formElement.querySelector(`.${inputElement.id}`);
 
   inputElement.classList.remove(setting.inputErrorClass);
   errorElement.classList.remove(setting.errorClass);
