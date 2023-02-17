@@ -5,7 +5,7 @@ const buttonOpenEditProfilePopup = document.querySelector(
 const profileInput = document.querySelector(".profile__title");
 const profileJob = document.querySelector(".profile__subtitle");
 
-const popupContainer = document.querySelectorAll(".popup");
+const popupContainers = document.querySelectorAll(".popup");
 
 const popupProfile = document.querySelector(".popup_edit-profile");
 const buttonCloseEditProfilePopup = document.querySelector(
@@ -27,6 +27,9 @@ const popupImg = document.querySelector(".popup_edit-image");
 const popupImgAdd = document.querySelector(".popup__images");
 const popupImgTitle = document.querySelector(".popup__images-title");
 const popupImgClose = document.querySelector(".popup__close_edit-image");
+
+const saveProfiledBtn = document.querySelector(".popup__save_edit-profile");
+const saveCardBtn = document.querySelector(".popup__save_edit-card");
 
 const initialCards = [
   {
@@ -61,13 +64,13 @@ const cardTemplate = document
 const cardsContainer = document.querySelector(".elements");
 
 //функция добавления данных из профиля в форму профиля
-function insetProfileForm() {
+function fillProfileForm() {
   nameInput.value = profileInput.textContent;
   jobInput.value = profileJob.textContent;
 }
 
 // функция обнуления попапа карточки
-function insetCardForm() {
+function clearCardForm() {
   nameInputCard.value = "";
   jobInputCard.value = "";
 }
@@ -75,11 +78,13 @@ function insetCardForm() {
 //функция открытие попапа
 function openPopup(popup) {
   popup.classList.add("popup_opened");
+  document.addEventListener("keydown", closeByEscape);
 }
 
 //функция закрытие попапа
 function closePopup(popup) {
   popup.classList.remove("popup_opened");
+  document.removeEventListener("keydown", closeByEscape);
 }
 
 // функция сохранние профиля из попапа
@@ -96,9 +101,10 @@ renderInitialCards();
 // ФУНКЦИЯ создания карточки, удаления, лайка, открытие попапа картинки
 function creatCard(item) {
   const card = cardTemplate.cloneNode(true);
+  const cardImg = card.querySelector(".element__image");
   card.querySelector(".element__title").textContent = item.name;
-  card.querySelector(".element__image").src = item.link;
-  card.querySelector(".element__image").alt = item.name;
+  cardImg.src = item.link;
+  cardImg.alt = item.name;
 
   // слушатель:  удаление карточки
   card.querySelector(".element__del").addEventListener("click", () => {
@@ -111,7 +117,7 @@ function creatCard(item) {
   });
 
   // слушатель открыть картинку карточки в попапе
-  card.querySelector(".element__image").addEventListener("click", () => {
+  cardImg.addEventListener("click", () => {
     openPopup(popupImg);
     popupImgAdd.src = item.link;
     popupImgAdd.alt = item.name;
@@ -136,13 +142,16 @@ function handleProfileFormSubmitCard(evt) {
   const link = jobInputCard.value;
   const card = creatCard({ name: title, link: link });
   cardsContainer.prepend(card);
+  saveCardBtn.setAttribute("disabled", "disabled");
   closePopup(popupCard);
 }
 
 //слушатель открытие попапа профиля
 buttonOpenEditProfilePopup.addEventListener("click", () => {
-  insetProfileForm();
+  fillProfileForm();
   openPopup(popupProfile);
+  saveProfiledBtn.setAttribute("disabled", "disabled");
+  saveProfiledBtn.classList.add("popup__save_inactive");
 });
 
 //слушатель закрытие попапа профиля
@@ -155,8 +164,10 @@ profileForm.addEventListener("submit", handleProfileFormSubmit);
 
 // слуштель открытие попапа добавления карточки
 popupBtnOpenCard.addEventListener("click", () => {
-  insetCardForm();
+  clearCardForm();
   openPopup(popupCard);
+  saveCardBtn.setAttribute("disabled", "disabled");
+  saveCardBtn.classList.add("popup__save_inactive");
 });
 
 // слушатель закрытие попапа добавления карточки
@@ -174,18 +185,17 @@ popupImgClose.addEventListener("click", () => {
 
 // слушатель закрытия попапа по темной области
 // каждому попапу навешиваем слушатль
-popupContainer.forEach((item) => {
+popupContainers.forEach((item) => {
   item.addEventListener("click", (event) => {
-    if (event.target == event.currentTarget) {
+    if (event.target === event.currentTarget) {
       closePopup(item);
     }
   });
 });
 
-// слушатель закрытия попапа по нажатию кнопки ESC
-document.addEventListener("keydown", (event) => {
-  const closePopupEsc = document.querySelector(".popup_opened");
-  if (event.key == "Escape") {
-    closePopup(closePopupEsc);
+function closeByEscape(evt) {
+  if (evt.key === "Escape") {
+    const openedPopup = document.querySelector(".popup_opened");
+    closePopup(openedPopup);
   }
-});
+}
