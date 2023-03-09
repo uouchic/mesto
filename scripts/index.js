@@ -1,3 +1,6 @@
+import FormValidator from "./validate.js";
+import Card from "./сard.js";
+
 // объявление переменных
 const buttonOpenEditProfilePopup = document.querySelector(
   ".profile__adit-button"
@@ -23,13 +26,13 @@ const formElementCard = document.querySelector(".popup__form_edit-card");
 const nameInputCard = document.querySelector(".popup__item_edit-card_name");
 const jobInputCard = document.querySelector(".popup__item_edit-card_job");
 
+const saveProfiledBtn = document.querySelector(".popup__save_edit-profile");
+const saveCardBtn = document.querySelector(".popup__save_edit-card");
+
 const popupImg = document.querySelector(".popup_edit-image");
 const popupImgAdd = document.querySelector(".popup__images");
 const popupImgTitle = document.querySelector(".popup__images-title");
 const popupImgClose = document.querySelector(".popup__close_edit-image");
-
-const saveProfiledBtn = document.querySelector(".popup__save_edit-profile");
-const saveCardBtn = document.querySelector(".popup__save_edit-card");
 
 const initialCards = [
   {
@@ -57,6 +60,15 @@ const initialCards = [
     link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg",
   },
 ];
+
+const settings = {
+  formSelector: ".popup__form",
+  inputSelector: ".popup__item",
+  submitButtonSelector: ".popup__save",
+  inactiveButtonClass: "popup__save_inactive",
+  inputErrorClass: "popup__item_type_error",
+  errorClass: "popup__error_active",
+};
 
 const cardTemplate = document
   .querySelector(".card-template")
@@ -95,13 +107,11 @@ function handleProfileFormSubmit(evt) {
   closePopup(popupProfile);
 }
 
-// вызов функции рендера карточек
-renderInitialCards();
-
 // ФУНКЦИЯ создания карточки, удаления, лайка, открытие попапа картинки
 function creatCard(item) {
   const card = cardTemplate.cloneNode(true);
   const cardImg = card.querySelector(".element__image");
+
   card.querySelector(".element__title").textContent = item.name;
   cardImg.src = item.link;
   cardImg.alt = item.name;
@@ -125,14 +135,6 @@ function creatCard(item) {
   });
 
   return card;
-}
-
-// ФУНКЦИЯ РЕНДЕРА КАРТОЧКИ
-function renderInitialCards() {
-  initialCards.forEach((item) => {
-    const card = creatCard(item);
-    cardsContainer.append(card);
-  });
 }
 
 // ФУНКЦИЯ ДОБАВЛЕНИЯ КАРТОЧКИ
@@ -185,6 +187,7 @@ popupImgClose.addEventListener("click", () => {
 
 // слушатель закрытия попапа по темной области
 // каждому попапу навешиваем слушатль
+
 popupContainers.forEach((item) => {
   item.addEventListener("click", (event) => {
     if (event.target === event.currentTarget) {
@@ -199,3 +202,18 @@ function closeByEscape(evt) {
     closePopup(openedPopup);
   }
 }
+
+const formList = Array.from(document.querySelectorAll(settings.formSelector));
+
+formList.forEach((formElement) => {
+  const validator = new FormValidator(settings, formElement);
+  validator.enableValidation();
+});
+
+initialCards.forEach((item) => {
+  // Создадим экземпляр карточки
+  const card = new Card(item, ".card-template");
+  // Создаём карточку и возвращаем наружу
+  // const cardElement = card.generateCard();
+  document.querySelector(".elements").append(card.generateCard());
+});
