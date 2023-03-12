@@ -63,22 +63,22 @@ export default class FormValidator {
   // Функция принимает массив полей ввода
   // и элемент кнопки, состояние которой нужно менять
 
-  _toggleButtonState = (inputList, buttonElement) => {
-    if (this._hasInvalidInput(inputList)) {
-      this._enableButton(buttonElement);
+  _toggleButtonState = () => {
+    if (this._hasInvalidInput()) {
+      this.disableButton(this._submitButton);
     } else {
-      this._disableButton(buttonElement);
+      this._enableButton(this._submitButton);
     }
   };
 
-  _enableButton = (buttonElement) => {
-    buttonElement.classList.add(this._settings.inactiveButtonClass);
-    buttonElement.setAttribute("disabled", "disabled");
+  disableButton = () => {
+    this._submitButton.classList.add(this._settings.inactiveButtonClass);
+    this._submitButton.setAttribute("disabled", "disabled");
   };
 
-  _disableButton = (buttonElement) => {
-    buttonElement.classList.remove(this._settings.inactiveButtonClass);
-    buttonElement.removeAttribute("disabled");
+  _enableButton = () => {
+    this._submitButton.classList.remove(this._settings.inactiveButtonClass);
+    this._submitButton.removeAttribute("disabled");
   };
 
   enableValidation = () => {

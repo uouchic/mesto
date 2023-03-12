@@ -2,7 +2,7 @@
 const popupImgAdd = document.querySelector(".popup__images");
 const popupImgTitle = document.querySelector(".popup__images-title");
 
-import openPopup from "./index.js";
+import { openPopup } from "./index.js";
 import { popupImg } from "./index.js";
 export default class Card {
   constructor(initialCards, templateSelector) {
