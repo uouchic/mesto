@@ -13,6 +13,8 @@ import {
   popupProfile,
   buttonCloseEditProfilePopup,
   profileForm,
+  nameInput,
+  jobInput,
   popupBtnOpenCard,
   popupCard,
   popupBtnCloseCard,
@@ -50,9 +52,13 @@ const enableValidation = (settings) => {
 
 enableValidation(settings);
 
-const userInformation = new UserInfo(profileInput, profileJob);
+const userInformation = new UserInfo(".profile__title", ".profile__subtitle");
 
-const cardImagePopup = new PopupWithImage(popupImg, popupImgAdd, popupImgTitle);
+const cardImagePopup = new PopupWithImage(
+  ".popup_edit-image",
+  popupImgAdd,
+  popupImgTitle
+);
 cardImagePopup.setEventListeners();
 
 const section = new Section(
@@ -70,7 +76,7 @@ section.renderer();
 function createCard(name, link) {
   const card = new Card(
     { name: name, link: link },
-    cardsContainer,
+    ".card-template",
     (link, name) => {
       cardImagePopup.open(link, name);
     }
@@ -82,19 +88,18 @@ function createCard(name, link) {
 //создаем объект попапа редактирования Профиля экземпляр  класса PopupWithForm
 
 const openEditProfilePopup = new PopupWithForm(
-  popupProfile,
-  profileForm,
-  () => {
-    userInformation.setUserInfo();
+  ".popup_edit-profile",
+  (inputValues) => {
+    userInformation.setUserInfo(inputValues["name"], inputValues["job"]);
   }
 );
 
 //слушатель открытие попапа профиля
 buttonOpenEditProfilePopup.addEventListener("click", () => {
   openEditProfilePopup.open();
-
-  userInformation.getUserInfo();
-
+  const userData = userInformation.getUserInfo();
+  nameInput.value = userData.userName;
+  jobInput.value = userData.userJob;
   formValidators["edit-profile"].disableButton();
 });
 
@@ -103,8 +108,7 @@ openEditProfilePopup.setEventListeners();
 //создаем объект попапаформы добавления карточки экземпляр  класса PopupWithForm
 
 const openEditCardPopup = new PopupWithForm(
-  popupCard,
-  formElementCard,
+  ".popup_edit-card",
   (inputValues) => {
     const card = createCard(inputValues["place"], inputValues["link"]);
     section.addItem(card);
