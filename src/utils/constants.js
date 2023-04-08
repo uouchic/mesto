@@ -3,6 +3,8 @@ const buttonOpenEditProfilePopup = document.querySelector(
 );
 const profileInput = document.querySelector(".profile__title");
 const profileJob = document.querySelector(".profile__subtitle");
+const profileImg = document.querySelector(".profile__update");
+const profileAvatar = document.querySelector(".profile__avatar");
 
 const popupContainers = document.querySelectorAll(".popup");
 
@@ -32,6 +34,7 @@ const popupImgTitle = document.querySelector(".popup__images-title");
 const popupImgClose = document.querySelector(".popup__close_edit-image");
 
 const cardsContainer = document.querySelector(".elements");
+
 
 const initialCards = [
   {
@@ -94,4 +97,7 @@ export {
   initialCards,
   settings,
   cardsContainer,
+  profileImg,
+  profileAvatar,
+
 };

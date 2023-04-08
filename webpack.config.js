@@ -12,6 +12,8 @@ module.exports = {
     publicPath: "",
   },
 
+  devtool: "source-map",
+
   mode: "development",
 
   devServer: {

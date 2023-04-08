@@ -4,21 +4,28 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Места России</title>
-
   </head>
   <body>
     <div class="page">
       <header class="header">
-        <img class="header__logo" src="<%=require('./images/logo.svg')%>" alt="Логотип" />
+        <img
+          class="header__logo"
+          src="<%=require('./images/logo.svg')%>"
+          alt="Логотип"
+        />
       </header>
 
       <main class="content">
         <section class="profile">
-          <img
-            class="profile__avatar"
-            src="<%=require('./images/image.jpg')%>"
-            alt="Аватарка"
-          />
+          <div class="profile__update">
+            <img
+              class="profile__avatar"
+              src="<%=require('./images/image.jpg')%>"
+              alt="Аватарка"
+            />
+            <div class="profile__overley"></div>
+          </div>
+
           <div class="profile__info">
             <h1 class="profile__title">Жак-Ив Кусто</h1>
             <button class="profile__adit-button" type="button"></button>
@@ -33,6 +40,65 @@
       <footer class="footer">
         <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
       </footer>
+    </div>
+
+
+
+
+
+    <div class="popup popup_confirm">
+      <div class="popup__container popup__container_confirm">
+        <h3 class="popup__title popup__title_confirm">Вы уверены?</h3>
+        <form
+          class="popup__form popup__form_confirm"
+          name="confirm"
+          novalidate
+        >
+          <button class="popup__save popup__save_confirm" type="submit">
+            Да
+          </button>
+        </form>
+        <button
+          class="popup__close popup__close_confirm"
+          type="button"
+        ></button>
+      </div>
+    </div>
+
+
+
+
+
+
+
+    <div class="popup popup_edit-avatar">
+      <div class="popup__container popup__container_edit-avatar">
+        <h3 class="popup__title popup__title_edit-avatar">Обновить аватар</h3>
+        <form
+          class="popup__form popup__form_edit-avatar"
+          name="edit-avatar"
+          novalidate
+        >
+          <input
+            id="url"
+            class="popup__item popup__item_edit-avatar_name"
+            type="url"
+            name="avatar"
+            value=""
+            placeholder="Ссылка на картинку"
+            required
+          />
+          <span class="url popup__error"></span>
+
+          <button class="popup__save popup__save_edit-avatar" type="submit">
+            Сохранить
+          </button>
+        </form>
+        <button
+          class="popup__close popup__close_edit-avatar"
+          type="button"
+        ></button>
+      </div>
     </div>
 
     <div class="popup popup_edit-profile">
@@ -136,12 +202,14 @@
         <img class="element__image" src="#" alt="" />
         <div class="element__group">
           <h2 class="element__title"></h2>
-          <button class="element__like" type="button"></button>
-          <button class="element__del" type="button"></button>
+          <div>
+            <button class="element__like" type="button"></button>
+            <p class="element__like-total">5</p>
+
+            <button class="element__del" type="button"></button>
+          </div>
         </div>
       </article>
     </template>
-
-
   </body>
 </html>
