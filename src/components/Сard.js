@@ -91,7 +91,7 @@ export default class Card {
 
   //переключатель лайка
 
-  _handleLikeClick() {
+  handleLikeClick() {
     this._likeButton.classList.toggle("element__like_active");
   }
 
@@ -99,7 +99,7 @@ export default class Card {
 
   _liked() {
     if (this._likes.some((user) => user._id === this._userId))
-      this._handleLikeClick();
+      this.handleLikeClick();
   }
 
   // кол-во лайков

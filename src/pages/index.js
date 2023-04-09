@@ -56,27 +56,19 @@ const enableValidation = (settings) => {
 
 enableValidation(settings);
 
-const userInformation = new UserInfo(".profile__title", ".profile__subtitle");
-
-const cardImagePopup = new PopupWithImage(
-  ".popup_edit-image",
-  popupImgAdd,
-  popupImgTitle
+const userInformation = new UserInfo(
+  ".profile__title",
+  ".profile__subtitle",
+  ".profile__avatar"
 );
+
+const cardImagePopup = new PopupWithImage(".popup_edit-image");
 cardImagePopup.setEventListeners();
 
-const section = new Section(
-  {
-    //data: initialCards,
-    renderer: (data) => {
-      const card = createCard(data);
-      section.addItem(card);
-    },
-  },
-  cardsContainer
-);
-
-//section.renderer();
+const section = new Section((data) => {
+  const card = createCard(data);
+  section.addItem(card);
+}, cardsContainer);
 
 let userId = null;
 
@@ -102,7 +94,7 @@ function createCard(data) {
       const apiLike = api.likeCard(data._id);
       apiLike
         .then((data) => {
-          card._handleLikeClick();
+          card.handleLikeClick();
           card.getLikesTotal(data);
         })
         .catch((err) => console.log(err));
@@ -112,7 +104,7 @@ function createCard(data) {
       const apiDisiLike = api.dislikeCard(data._id);
       apiDisiLike
         .then((data) => {
-          card._handleLikeClick();
+          card.handleLikeClick();
           card.getLikesTotal(data);
         })
         .catch((err) => console.log(err));
@@ -145,9 +137,12 @@ const openEditProfilePopup = new PopupWithForm(
       .setUserInfo({ name: inputValues.name, job: inputValues.job })
       .then((date) => {
         userInformation.setUserInfo(date.name, date.about);
-        openEditProfilePopup.sabmitBtnSaveComplite();
+        openEditProfilePopup.close();
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log(err))
+      .finally(() => {
+        openEditProfilePopup.sabmitBtnSaveComplite("Сохранить");
+      });
   }
 );
 
@@ -176,16 +171,18 @@ const openEditCardPopup = new PopupWithForm(
       .then((date) => {
         const card = createCard(date);
         section.addItem(card);
-        openEditCardPopup.sabmitBtnSaveComplite();
+        openEditCardPopup.close();
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log(err))
+      .finally(() => {
+        openEditCardPopup.sabmitBtnSaveComplite("Создать");
+      });
   }
 );
 
 //слушатель открытие попапа кард
 popupBtnOpenCard.addEventListener("click", () => {
   openEditCardPopup.open();
-
   formValidators["edit-card"].disableButton();
 });
 
@@ -202,36 +199,12 @@ const api = new Api({
   },
 });
 
-
-//рендерим карточки из апи
-
-const cardsApi = api.getInitialCards();
-
-cardsApi
-  .then((data) => {
-    const section = new Section(
-      {
-        data: data,
-        renderer: (data) => {
-          const card = createCard(data);
-          section.addItem(card);
-        },
-      },
-      cardsContainer
-    );
-    section.renderer();
-  })
-  .catch((err) => console.log(err));
-
-  //обновляем данные пользователя из апи
-
-const userInfoApi = api.getUserInfo();
-userInfoApi
-  .then((user) => {
-    userId = user._id;
-    profileInput.textContent = user.name;
-    profileJob.textContent = user.about;
-    profileAvatar.src = user.avatar;
+Promise.all([api.getUserInfo(), api.getInitialCards()])
+  .then(([userInfoApi, cardsApi]) => {
+    userId = userInfoApi._id;
+    userInformation.setUserInfo(userInfoApi.name, userInfoApi.about);
+    userInformation.setUserAvatar(userInfoApi.avatar);
+    section.renderer(cardsApi);
   })
   .catch((err) => console.log(err));
 
@@ -242,11 +215,15 @@ const avatarPopup = new PopupWithForm(".popup_edit-avatar", (inputValues) => {
   api
     .updateAvatar({ avatar: inputValues.avatar })
     .then((date) => {
-      profileAvatar.src = date.avatar;
-      avatarPopup.sabmitBtnSaveComplite();
+      userInformation.setUserAvatar(date.avatar);
+      avatarPopup.close();
     })
-    .catch((err) => console.log(err));
+    .catch((err) => console.log(err))
+    .finally(() => {
+      avatarPopup.sabmitBtnSaveComplite("Сохранить");
+    });
 });
+
 avatarPopup.setEventListeners();
 
 //слушатель открытия попапа обновления аватара
